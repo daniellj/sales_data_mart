@@ -49,8 +49,8 @@ Set-ExecutionPolicy RemoteSigned
 
 2. Clone and configure the project
 ```
-git clone --branch main https://github.com/daniellj/dbt_dw_sales.git
-cd dbt_dw_sales
+git clone --branch main https://github.com/daniellj/sales_data_mart.git
+cd sales_data_mart
 ```
 
 3. Create the virtual environment
