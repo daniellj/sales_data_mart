@@ -1,0 +1,8 @@
+# root folder
+.venv
+/venv
+
+# dbt
+dw_rep/target/
+dw_rep/dbt_packages/
+dw_rep/logs/
