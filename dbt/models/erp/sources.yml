@@ -9,7 +9,6 @@ sources:
       identifier: true
     database: erp
     loader: clickhouse
-    loader_at_field: loader_at
     meta:
       owner: "ERP Company"
     freshness:
@@ -36,5 +35,3 @@ sources:
             description: "The product price."
           - name: transaction_datetime
             description: "The date and time of the sales transaction."
-
-
