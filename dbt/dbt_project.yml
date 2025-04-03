@@ -41,19 +41,19 @@ models:
       materialized: ephemeral
       tags: ['intermediate']
 
-    marts:
-      schema: marts
+    mart:
+      schema: mart
       materialized: table
-      tags: ['marts']
+      tags: ['mart']
 
 seeds:
-  sales_data_mart:
+  raw_sales_data_mart:
     tags: ['seeds']
     +enabled: true
 
-    countries:
+    raw_countries:
       delimiter: ','
-      +schema: countries
+      +schema: raw_countries
       description: "."
       +column_types:
         id: Int
@@ -82,9 +82,9 @@ seeds:
         - name: create_date_ts
           description: "Timestamp of record creation or ingestion."
 
-    orders:
+    raw_orders:
       delimiter: ','
-      +schema: orders
+      +schema: raw_orders
       description: "Orders placed by customers, including shipment details, dates, and shipping method."
       +column_types:
         order_id: Int
@@ -131,9 +131,9 @@ seeds:
         - name: ship_country
           description: "Country to which the order was shipped."
 
-    order_details:
+    raw_order_details:
       delimiter: ','
-      +schema: order_details
+      +schema: raw_order_details
       description: "Line items within each order, including product, pricing, quantity, and discount information."
       +column_types:
         order_id: Int
@@ -153,9 +153,9 @@ seeds:
         - name: discount
           description: "Discount applied to the product in this order line, expressed as a decimal (e.g., 0.1 for 10%)."
 
-    products:
+    raw_products:
       delimiter: ','
-      +schema: products
+      +schema: raw_products
       description: "List of products offered by the company, including pricing, stock levels, and supplier/category information."
       +column_types:
         product_id: Int

@@ -128,6 +128,18 @@ This step performs:
 ./run_env_debug.sh
 ```
 
+## 🛠️ Run to load data from CSV (seeds)
+▶️ Windows
+```
+.\run_env_seed.bat
+```
+
+## 🛠️ Run to data load from raw to staging
+Run all data load:
+```
+.\run_env_run.bat
+```
+
 ✅ What is validated by dbt debug
 Presence and correctness of:
 - dbt_project.yml
