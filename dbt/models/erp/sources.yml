@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  - name: erp
+    description: "Raw data from the company's ERP system."
+    quoting:
+      database: false
+      schema: true
+      identifier: true
+    database: erp
+    loader: clickhouse
+    loader_at_field: loader_at
+    meta:
+      owner: "ERP Company"
+    freshness:
+      warn_after:
+        count: 1
+        period: day
+      error_after:
+        count: 2
+        period: day
+    tags: [erp, system production]
+
+    tables:
+      - name: sales
+        description: "Table containing the company's sales transactions."
+        columns:
+          - name: id
+            description: "Primary key of the table, a unique identifier for the sale."
+            tests:
+              - unique
+              - not_null
+          - name: product_id
+            description: "The product identifier."
+          - name: price
+            description: "The product price."
+          - name: transaction_datetime
+            description: "The date and time of the sales transaction."
+
+

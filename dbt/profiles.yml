@@ -1,0 +1,32 @@
+clickhouse_dw:
+  target: "{{ env_var('DBT_CH_ENV') }}"
+  outputs:
+    development:
+      type: clickhouse
+      schema: "{{ env_var('DBT_CH_SCHEMA') }}"
+      host: "{{ env_var('DBT_CH_HOST') }}"
+      port: "{{ env_var('DBT_CH_PORT') | int }}"
+      user: "{{ env_var('DBT_CH_USER') }}"
+      password: "{{ env_var('DBT_CH_PASSWORD') }}"
+      secure: true
+      verify: false
+
+    homologation:
+      type: clickhouse
+      schema: "{{ env_var('DBT_CH_SCHEMA') }}"
+      host: "{{ env_var('DBT_CH_HOST') }}"
+      port: "{{ env_var('DBT_CH_PORT') | int }}"
+      user: "{{ env_var('DBT_CH_USER') }}"
+      password: "{{ env_var('DBT_CH_PASSWORD') }}"
+      secure: true
+      verify: false
+
+    production:
+      type: clickhouse
+      schema: "{{ env_var('DBT_CH_SCHEMA') }}"
+      host: "{{ env_var('DBT_CH_HOST') }}"
+      port: "{{ env_var('DBT_CH_PORT') | int }}"
+      user: "{{ env_var('DBT_CH_USER') }}"
+      password: "{{ env_var('DBT_CH_PASSWORD') }}"
+      secure: true
+      verify: false

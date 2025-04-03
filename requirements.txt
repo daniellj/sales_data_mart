@@ -1,0 +1,4 @@
+dbt-core==1.8.9
+dbt-clickhouse==1.8.9
+python-dotenv==1.1.0
+pre_commit==4.2.0
