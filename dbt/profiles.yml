@@ -21,7 +21,7 @@ clickhouse_dw:
       port: "{{ env_var('DBT_CH_PORT') | int }}"
       cluster: "{{ env_var('DBT_CH_CLUSTER') }}"
       user: "{{ env_var('DBT_CH_USER') }}"
-      secure: true
+      secure: false
       verify: false
       allow_automatic_deduplication: true
 
@@ -33,6 +33,6 @@ clickhouse_dw:
       port: "{{ env_var('DBT_CH_PORT') | int }}"
       cluster: "{{ env_var('DBT_CH_CLUSTER') }}"
       user: "{{ env_var('DBT_CH_USER') }}"
-      secure: true
+      secure: false
       verify: false
       allow_automatic_deduplication: true
