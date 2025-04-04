@@ -3,30 +3,36 @@ clickhouse_dw:
   outputs:
     development:
       type: clickhouse
+      driver: native
       schema: "{{ env_var('DBT_CH_SCHEMA') }}"
       host: "{{ env_var('DBT_CH_HOST') }}"
       port: "{{ env_var('DBT_CH_PORT') | int }}"
+      cluster: "{{ env_var('DBT_CH_CLUSTER') }}"
       user: "{{ env_var('DBT_CH_USER') }}"
-      password: "{{ env_var('DBT_CH_PASSWORD') }}"
-      secure: true
+      secure: false
       verify: false
+      allow_automatic_deduplication: true
 
     homologation:
       type: clickhouse
+      driver: native
       schema: "{{ env_var('DBT_CH_SCHEMA') }}"
       host: "{{ env_var('DBT_CH_HOST') }}"
       port: "{{ env_var('DBT_CH_PORT') | int }}"
+      cluster: "{{ env_var('DBT_CH_CLUSTER') }}"
       user: "{{ env_var('DBT_CH_USER') }}"
-      password: "{{ env_var('DBT_CH_PASSWORD') }}"
       secure: true
       verify: false
+      allow_automatic_deduplication: true
 
     production:
       type: clickhouse
+      driver: native
       schema: "{{ env_var('DBT_CH_SCHEMA') }}"
       host: "{{ env_var('DBT_CH_HOST') }}"
       port: "{{ env_var('DBT_CH_PORT') | int }}"
+      cluster: "{{ env_var('DBT_CH_CLUSTER') }}"
       user: "{{ env_var('DBT_CH_USER') }}"
-      password: "{{ env_var('DBT_CH_PASSWORD') }}"
       secure: true
       verify: false
+      allow_automatic_deduplication: true

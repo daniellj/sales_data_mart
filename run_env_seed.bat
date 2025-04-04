@@ -37,6 +37,16 @@ for /f "usebackq tokens=1,2 delims==" %%A in (".env.%ENVIRONMENT%") do (
     set "%%A=%%B"
 )
 
+for /f "usebackq tokens=* delims=" %%L in (".env.%ENVIRONMENT%") do (
+    set "LINE=%%L"
+    echo !LINE! | findstr "=" >nul
+    if !errorlevel! == 0 (
+        for /f "tokens=1,2 delims==" %%A in ("!LINE!") do (
+            set "%%A=%%B"
+        )
+    )
+)
+
 REM Executa dbt seed
 echo Running seed: %DBT_EXE% seed --project-dir %DBT_DIR% --profiles-dir %DBT_DIR%
 "%DBT_EXE%" seed --project-dir "%DBT_DIR%" --profiles-dir "%DBT_DIR%"
