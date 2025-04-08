@@ -1,8 +1,7 @@
-
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'clickhouse_dw'
+name: 'data_mart_sales'
 version: '1.0.0'
 
 # This setting configures which "profile" dbt uses for this project.
@@ -22,39 +21,37 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-# Configuring models
-# Full documentation: https://docs.getdbt.com/docs/configuring-models
-
-# In this example config, we tell dbt to build all models in the example/
-# directory as views. These settings can be overridden in the individual model
-# files using the `{{ config(...) }}` macro.
 models:
-  sales_data_mart:
-    # Config indicated by + and applies to all files under models/example/
-    staging:
-      schema: staging
-      materialized: table
-      tags: ['staging']
+  staging:
+    +enabled: true
+    +database: dw_staging
+    +materialized: table
+    +tags: ['bronze_layer', 'staging']
 
-    intermediate:
-      schema: intermediate
-      materialized: ephemeral
-      tags: ['intermediate']
+  intermediate:
+    +enabled: false
+    +database: dw_intermediate
+    +materialized: table
+    +tags: ['silver_layer','intermediate']
 
-    mart:
-      schema: mart
-      materialized: table
-      tags: ['mart']
+  mart:
+    +enabled: false
+    +database: dw_mart
+    +materialized: table
+    +tags: ['gold_layer','mart']
 
 seeds:
-  raw_sales_data_mart:
-    tags: ['seeds']
-    +enabled: true
+  data_mart_sales:
+    +enabled: "{{ target.name == 'development' }}"
+    +database: dw_raw
+    +quote_columns: true
+    +tags: ['seeds', 'csv']
 
-    raw_countries:
-      delimiter: ','
-      +schema: raw_countries
-      description: "."
+    countries:
+      +enabled: true
+      +delimiter: ','
+      +alias: countries
+      +description: "Contains the standardized list of countries used in the data warehouse, including multilingual names (Portuguese and English), ISO codes, and metadata for data lineage. Each record represents a unique country as defined by the source system, with support for formatted and unformatted naming conventions."
       +column_types:
         id: Int
         lang_pt_br: String
@@ -64,7 +61,7 @@ seeds:
         alpha_2: String
         alpha_3: String
         create_date_ts: DateTime
-      columns:
+      +columns:
         - name: id
           description: "Unique identifier of the country in the source system."
         - name: lang_pt_br
@@ -82,10 +79,11 @@ seeds:
         - name: create_date_ts
           description: "Timestamp of record creation or ingestion."
 
-    raw_orders:
-      delimiter: ','
-      +schema: raw_orders
-      description: "Orders placed by customers, including shipment details, dates, and shipping method."
+    orders:
+      +enabled: false
+      +delimiter: ','
+      +alias: orders
+      +description: "Orders placed by customers, including shipment details, dates, and shipping method."
       +column_types:
         order_id: Int
         customer_id: String
@@ -101,7 +99,7 @@ seeds:
         ship_region: String
         ship_postal_code: String
         ship_country: String
-      columns:
+      +columns:
         - name: order_id
           description: "Unique identifier for each order."
         - name: customer_id
@@ -131,17 +129,18 @@ seeds:
         - name: ship_country
           description: "Country to which the order was shipped."
 
-    raw_order_details:
-      delimiter: ','
-      +schema: raw_order_details
-      description: "Line items within each order, including product, pricing, quantity, and discount information."
+    order_details:
+      +enabled: false
+      +delimiter: ','
+      +alias: order_details
+      +description: "Line items within each order, including product, pricing, quantity, and discount information."
       +column_types:
         order_id: Int
         product_id: Int
         unit_price: Float
         quantity: Int
         discount: Float
-      columns:
+      +columns:
         - name: order_id
           description: "Identifier of the order to which this item belongs."
         - name: product_id
@@ -153,10 +152,11 @@ seeds:
         - name: discount
           description: "Discount applied to the product in this order line, expressed as a decimal (e.g., 0.1 for 10%)."
 
-    raw_products:
-      delimiter: ','
-      +schema: raw_products
-      description: "List of products offered by the company, including pricing, stock levels, and supplier/category information."
+    products:
+      +enabled: false
+      +delimiter: ','
+      +alias: products
+      +description: "List of products offered by the company, including pricing, stock levels, and supplier/category information."
       +column_types:
         product_id: Int
         product_name: String
@@ -168,7 +168,7 @@ seeds:
         units_on_order: Int
         reorder_level: Int
         discontinued: Int
-      columns:
+      +columns:
         - name: product_id
           description: "Unique identifier for the product."
         - name: product_name

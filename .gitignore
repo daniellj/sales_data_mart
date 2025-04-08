@@ -2,6 +2,7 @@
 .venv
 venv/
 logs/
+optimize_partitions.log
 
 # dbt
 dbt/target/

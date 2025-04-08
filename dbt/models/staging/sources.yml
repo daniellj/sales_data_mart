@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: sedds401
+    description: "Raw sales data from the company's ERP system."
+    quoting:
+      database: true
+      schema: false
+      identifier: true
+    database: dw_raw
+    loader: clickhouse
+    meta:
+      owner: "ERP Company"
+    tags: ['raw sales data']
+
+    tables:
+      - name: countries
+        description: "Contains the standardized list of countries used in the data warehouse, including multilingual names (Portuguese and English), ISO codes, and metadata for data lineage. Each record represents a unique country as defined by the source system, with support for formatted and unformatted naming conventions."
+        columns:
+        - name: id
+          description: "Unique identifier of the country in the source system."
+        - name: lang_pt_br
+          description: "Country name in Brazilian Portuguese (pt-BR), unformatted."
+        - name: lang_pt_br_formatted
+          description: "Country name in Brazilian Portuguese (pt-BR), with formatting applied (e.g., capitalization)."
+        - name: lang_en
+          description: "Country name in English (en), unformatted."
+        - name: lang_en_formatted
+          description: "Country name in English (en), with formatting applied (e.g., capitalization)."
+        - name: alpha_2
+          description: "ISO 3166-1 alpha-2 country code (2-letter format)."
+        - name: alpha_3
+          description: "ISO 3166-1 alpha-3 country code (3-letter format)."
+          data_tests:
+            - unique
+            - not_null
+        - name: create_date_ts
+          description: "Timestamp of record creation or ingestion."

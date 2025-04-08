@@ -1,5 +1,11 @@
 version: 2
 
+models:
+  staging:
+    +schema: staging
+  raw:
+    +schema: raw
+
 sources:
   - name: sap
     description: "Raw sales data from the company's ERP system."
