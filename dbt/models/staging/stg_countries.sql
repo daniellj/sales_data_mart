@@ -1,10 +1,9 @@
 {{ config(
     materialized='incremental',
-    unique_key=['alpha_2', 'alpha_3'],
-    incremental_strategy='insert_overwrite'
+    incremental_strategy='append'
 ) }}
 
-with stg_countries as (
+with source_data as (
 select
     CAST(id as Int) as id,
     CAST(lang_pt_br as String) as lang_pt_br,
@@ -26,6 +25,15 @@ select
 from  {{ source( 'sedds401', 'countries') }}
 )
 
-select
-*
-from stg_countries
+-- REGRA: inserir apenas se for novo OU se for mais recente que o existente
+select *
+from source_data s
+{% if is_incremental() %}
+where not exists (
+    select 1
+    from {{ this }} t
+    where t.alpha_2 = s.alpha_2
+      and t.alpha_3 = s.alpha_3
+      and t.create_date_ts >= s.create_date_ts
+)
+{% endif %}
