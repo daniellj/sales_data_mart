@@ -25,19 +25,19 @@ models:
   staging:
     +enabled: true
     +database: dw_staging
-    +materialized: table
+    +materialized: incremental
     +tags: ['bronze_layer', 'staging']
 
   intermediate:
     +enabled: false
     +database: dw_intermediate
-    +materialized: table
+    +materialized: incremental
     +tags: ['silver_layer','intermediate']
 
   mart:
     +enabled: false
     +database: dw_mart
-    +materialized: table
+    +materialized: incremental
     +tags: ['gold_layer','mart']
 
 seeds:
@@ -47,7 +47,7 @@ seeds:
     +quote_columns: true
     +tags: ['seeds', 'csv']
 
-    countries:
+    raw_countries:
       +enabled: true
       +delimiter: ','
       +alias: countries
@@ -79,7 +79,7 @@ seeds:
         - name: create_date_ts
           description: "Timestamp of record creation or ingestion."
 
-    orders:
+    raw_orders:
       +enabled: false
       +delimiter: ','
       +alias: orders
@@ -129,7 +129,7 @@ seeds:
         - name: ship_country
           description: "Country to which the order was shipped."
 
-    order_details:
+    raw_order_details:
       +enabled: false
       +delimiter: ','
       +alias: order_details
@@ -152,7 +152,7 @@ seeds:
         - name: discount
           description: "Discount applied to the product in this order line, expressed as a decimal (e.g., 0.1 for 10%)."
 
-    products:
+    raw_products:
       +enabled: false
       +delimiter: ','
       +alias: products

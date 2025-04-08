@@ -11,7 +11,7 @@ sources:
     loader: clickhouse
     meta:
       owner: "ERP Company"
-    tags: ['raw sales data']
+    tags: ['bronze_layer', 'raw']
 
     tables:
       - name: countries

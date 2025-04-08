@@ -1,6 +1,9 @@
 {{ config(
     materialized='incremental',
-    incremental_strategy='append'
+    incremental_strategy='append',
+    unique_key=['alpha_2', 'alpha_3'],
+    database='dw_staging',
+    alias='countries'
 ) }}
 
 with source_data as (
@@ -23,17 +26,15 @@ select
         END AS continent,
     CAST(create_date_ts as DateTime) as create_date_ts
 from  {{ source( 'sedds401', 'countries') }}
-)
 
--- REGRA: inserir apenas se for novo OU se for mais recente que o existente
-select *
-from source_data s
 {% if is_incremental() %}
-where not exists (
-    select 1
-    from {{ this }} t
-    where t.alpha_2 = s.alpha_2
-      and t.alpha_3 = s.alpha_3
-      and t.create_date_ts >= s.create_date_ts
+where create_date_ts > (
+    select max(create_date_ts)
+    from {{ this }}
 )
 {% endif %}
+
+)
+
+select *
+from source_data
