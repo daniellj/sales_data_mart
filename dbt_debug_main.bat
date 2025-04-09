@@ -52,3 +52,7 @@ REM Executa dbt debug com ambiente já carregado
 echo Executando: %DBT_EXE% debug --profiles-dir %DBT_MAIN_DIR% --project-dir %DBT_MAIN_DIR%
 "%DBT_EXE%" debug --profiles-dir "%DBT_MAIN_DIR%" --project-dir "%DBT_MAIN_DIR%"
 echo -----------------------------------------------------------
+REM Executa dbt ls com ambiente já carregado
+echo Executando: %DBT_EXE% ls --select countries --output name --profiles-dir %DBT_MAIN_DIR% --project-dir %DBT_MAIN_DIR%
+"%DBT_EXE%" ls --select countries --output name --profiles-dir "%DBT_MAIN_DIR%" --project-dir "%DBT_MAIN_DIR%"
+echo -----------------------------------------------------------

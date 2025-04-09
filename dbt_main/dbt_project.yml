@@ -1,4 +1,4 @@
-name: 'data_mart_sales'
+name: 'data_project'
 version: '1.0.0'
 profile: 'clickhouse_dw'
 
@@ -15,9 +15,7 @@ clean-targets:
   - "dbt_packages"
 
 models:
-  data_mart_sales:
-    +enabled: true
-
+  data_project:
     staging:
       +enabled: true
       +database: dw_staging
