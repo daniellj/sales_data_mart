@@ -5,6 +5,10 @@ logs/
 optimize_partitions.log
 
 # dbt
-dbt/target/
-dbt/dbt_packages/
-dbt/logs/
+dbt_main/target/
+dbt_main/dbt_packages/
+dbt_main/logs/
+
+dbt_seeds/target/
+dbt_seeds/dbt_packages/
+dbt_seeds/logs/

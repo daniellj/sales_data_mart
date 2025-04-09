@@ -36,5 +36,14 @@ where create_date_ts > (
 
 )
 
-select *
+select
+    id,
+    lang_pt_br,
+    lang_pt_br_formatted,
+    lang_en,
+    lang_en_formatted,
+    alpha_2,
+    alpha_3,
+    continent,
+    create_date_ts
 from source_data

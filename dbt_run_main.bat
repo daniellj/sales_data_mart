@@ -27,7 +27,8 @@ for /f "tokens=2 delims==" %%W in ("!VENV_LINE!") do (
 REM Caminho da venv e pasta do projeto
 set "VENV_PATH=%~dp0%VENV_NAME%"
 set "DBT_EXE=%VENV_PATH%\Scripts\dbt.exe"
-set "DBT_DIR=%~dp0dbt"
+set "DBT_MAIN_DIR=%~dp0dbt_main"
+set "DBT_SEEDS_DIR=%~dp0dbt_seeds"
 
 REM Ativa a venv
 call "%VENV_PATH%\Scripts\activate.bat"
@@ -37,16 +38,16 @@ for /f "usebackq tokens=1,2 delims==" %%A in (".env.%ENVIRONMENT%") do (
     set "%%A=%%B"
 )
 
-for /f "usebackq tokens=* delims=" %%L in (".env.%ENVIRONMENT%") do (
-    set "LINE=%%L"
-    echo !LINE! | findstr "=" >nul
-    if !errorlevel! == 0 (
-        for /f "tokens=1,2 delims==" %%A in ("!LINE!") do (
-            set "%%A=%%B"
-        )
-    )
-)
-
+echo -----------------------------------------------------------
+REM Executa dbt clean
+echo Running: %DBT_EXE% clean --project-dir %DBT_MAIN_DIR% --profiles-dir %DBT_MAIN_DIR%
+"%DBT_EXE%" clean --project-dir "%DBT_MAIN_DIR%" --profiles-dir "%DBT_MAIN_DIR%"
+echo -----------------------------------------------------------
+REM Executa dbt deps
+echo Running: %DBT_EXE% deps --project-dir %DBT_MAIN_DIR% --profiles-dir %DBT_MAIN_DIR%
+"%DBT_EXE%" deps --project-dir "%DBT_MAIN_DIR%" --profiles-dir "%DBT_MAIN_DIR%"
+echo -----------------------------------------------------------
 REM Executa dbt seed
-echo Running seed: %DBT_EXE% seed --project-dir %DBT_DIR% --profiles-dir %DBT_DIR%
-"%DBT_EXE%" seed --project-dir "%DBT_DIR%" --profiles-dir "%DBT_DIR%"
+echo Running: %DBT_EXE% run --project-dir %DBT_MAIN_DIR% --profiles-dir %DBT_MAIN_DIR%
+"%DBT_EXE%" run --project-dir "%DBT_MAIN_DIR%" --profiles-dir "%DBT_MAIN_DIR%"
+echo -----------------------------------------------------------

@@ -1,0 +1,37 @@
+name: 'data_mart_sales'
+version: '1.0.0'
+profile: 'clickhouse_dw'
+
+# Project file paths
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  data_mart_sales:
+    +enabled: true
+
+    staging:
+      +enabled: true
+      +database: dw_staging
+      +materialized: incremental
+      +tags: ['bronze_layer', 'staging']
+
+    intermediate:
+      +enabled: false
+      +database: dw_intermediate
+      +materialized: incremental
+      +tags: ['silver_layer', 'intermediate']
+
+    mart:
+      +enabled: false
+      +database: dw_mart
+      +materialized: incremental
+      +tags: ['gold_layer', 'mart']

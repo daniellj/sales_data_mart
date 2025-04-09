@@ -29,6 +29,9 @@ sources:
           description: "Country name in English (en), with formatting applied (e.g., capitalization)."
         - name: alpha_2
           description: "ISO 3166-1 alpha-2 country code (2-letter format)."
+          data_tests:
+            - unique
+            - not_null
         - name: alpha_3
           description: "ISO 3166-1 alpha-3 country code (3-letter format)."
           data_tests:

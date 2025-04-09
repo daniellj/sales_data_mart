@@ -1,0 +1,84 @@
+name: 'data_mart_sales'
+version: '1.0.0'
+profile: 'clickhouse_dw'
+
+# Project file paths
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  data_mart_sales:
+    +enabled: true
+    +database: dw_raw
+    +quote_columns: true
+    +tags: ['seeds', 'csv']
+
+    raw:
+      countries:
+        +enabled: "{{ target.name == 'development' }}"
+        +delimiter: ','
+        +alias: countries
+        +column_types:
+          id: Int
+          lang_pt_br: String
+          lang_pt_br_formatted: String
+          lang_en: String
+          lang_en_formatted: String
+          alpha_2: String
+          alpha_3: String
+          create_date_ts: DateTime
+
+      orders:
+        +enabled: "{{ target.name == 'development' }}"
+        +delimiter: ','
+        +alias: orders
+        +column_types:
+          order_id: Int
+          customer_id: String
+          employee_id: Int
+          order_date: DateTime
+          required_date: DateTime
+          shipped_date: DateTime
+          ship_via: Int
+          freight: Float
+          ship_name: String
+          ship_address: String
+          ship_city: String
+          ship_region: String
+          ship_postal_code: String
+          ship_country: String
+
+      order_details:
+        +enabled: "{{ target.name == 'development' }}"
+        +delimiter: ','
+        +alias: order_details
+        +column_types:
+          order_id: Int
+          product_id: Int
+          unit_price: Float
+          quantity: Int
+          discount: Float
+
+      products:
+        +enabled: "{{ target.name == 'development' }}"
+        +delimiter: ','
+        +alias: products
+        +column_types:
+          product_id: Int
+          product_name: String
+          supplier_id: Int
+          category_id: Int
+          quantity_per_unit: String
+          unit_price: Float
+          units_in_stock: Int
+          units_on_order: Int
+          reorder_level: Int
+          discontinued: Int
