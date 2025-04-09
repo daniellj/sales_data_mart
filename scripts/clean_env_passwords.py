@@ -11,6 +11,7 @@ for file in env_files:
             lines = f.readlines()
         with open(file, "w", encoding="utf-8") as f:
             for line in lines:
-                line = re.sub(r"^(DBT_CH_PASSWORD)=.*", r"\1=", line)
+                #line = re.sub(r"^(DBT_CH_PASSWORD)=.*", r"\1=", line)
+                line = re.sub(r"^(DBT_CH_PASSWORD)\s*=\s*.*", r"\1=", line)
                 f.write(line)
         print(f"Cleaned: {file}")

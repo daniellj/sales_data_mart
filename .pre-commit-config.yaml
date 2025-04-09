@@ -6,3 +6,4 @@ repos:
         entry: python scripts/clean_env_passwords.py
         language: system
         files: ^\.env\.(dev|hom|prod|development|homologation|production)$
+        stages: [manual]
