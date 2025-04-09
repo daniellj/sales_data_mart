@@ -18,18 +18,18 @@ models:
   data_project:
     staging:
       +enabled: true
-      +database: dw_staging
+      +schema: dw_staging
       +materialized: incremental
       +tags: ['bronze_layer', 'staging']
 
     intermediate:
       +enabled: false
-      +database: dw_intermediate
-      +materialized: incremental
+      +schema: dw_intermediate
+      +materialized: ephemeral
       +tags: ['silver_layer', 'intermediate']
 
     mart:
       +enabled: false
-      +database: dw_mart
+      +schema: dw_mart
       +materialized: incremental
       +tags: ['gold_layer', 'mart']

@@ -4,7 +4,8 @@ clickhouse_dw:
     development:
       type: clickhouse
       driver: native
-      schema: "{{ env_var('DBT_CH_SCHEMA') }}"
+      database: "{{ env_var('DBT_CH_DATABASE') }}"
+      schema: "{{ env_var('DBT_CH_DATABASE') }}"
       host: "{{ env_var('DBT_CH_HOST') }}"
       port: "{{ env_var('DBT_CH_PORT') | int }}"
       cluster: "{{ env_var('DBT_CH_CLUSTER') }}"
@@ -16,7 +17,8 @@ clickhouse_dw:
     homologation:
       type: clickhouse
       driver: native
-      schema: "{{ env_var('DBT_CH_SCHEMA') }}"
+      database: "{{ env_var('DBT_CH_DATABASE') }}"
+      schema: "{{ env_var('DBT_CH_DATABASE') }}"
       host: "{{ env_var('DBT_CH_HOST') }}"
       port: "{{ env_var('DBT_CH_PORT') | int }}"
       cluster: "{{ env_var('DBT_CH_CLUSTER') }}"
@@ -28,7 +30,8 @@ clickhouse_dw:
     production:
       type: clickhouse
       driver: native
-      schema: "{{ env_var('DBT_CH_SCHEMA') }}"
+      database: "{{ env_var('DBT_CH_DATABASE') }}"
+      schema: "{{ env_var('DBT_CH_DATABASE') }}"
       host: "{{ env_var('DBT_CH_HOST') }}"
       port: "{{ env_var('DBT_CH_PORT') | int }}"
       cluster: "{{ env_var('DBT_CH_CLUSTER') }}"
